@@ -19,6 +19,8 @@ export function absoluteUrl(path: string): string {
 const ORG_ID = () => `${siteUrl()}/#organization`;
 const SITE_ID = (locale: Locale) => `${siteUrl()}${localePath(locale, "/")}#website`;
 const PERSON_ID = () => `${siteUrl()}/founder/#person`;
+/** The founder's own site, where his canonical Person entity (https://mdhs.bd/#person) is defined. */
+const FOUNDER_HOME = "https://mdhs.bd/";
 const NEWS_ID = () => `${siteUrl()}/#durbin-news`;
 
 /**
@@ -288,6 +290,7 @@ function organizationNode(): JsonLd {
       name: getFounder().name,
       alternateName: founderNames("en").slice(1),
       url: absoluteUrl("/founder/"),
+      sameAs: [FOUNDER_HOME],
     },
   };
   if (!isPlaceholder(site.email)) data.email = site.email;
@@ -366,7 +369,7 @@ export function founderJsonLd(locale: Locale = "en"): JsonLd {
   const founder = getFounder(locale);
   const site = getSite();
   const page = absoluteUrl(localePath(locale, "/founder/"));
-  const sameAs = [...(founder.contact.links ?? []).map((l) => l.href), ...site.social.map((s) => s.href)].filter(
+  const sameAs = [FOUNDER_HOME, ...(founder.contact.links ?? []).map((l) => l.href), ...site.social.map((s) => s.href)].filter(
     (h, i, all) => h && !h.includes("[") && all.indexOf(h) === i,
   );
   const news = getSite("en").network?.find((n) => /durbinnews/.test(n.href));

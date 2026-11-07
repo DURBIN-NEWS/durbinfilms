@@ -161,6 +161,10 @@
     "lead": "For production enquiries, press requests, interviews or collaborations, the studio inbox is the fastest route. WhatsApp is quicker still if it is urgent.",
     "links": [
       {
+        "label": "Website",
+        "href": "https://mdhs.bd/"
+      },
+      {
         "label": "LinkedIn",
         "href": "https://www.linkedin.com/in/sumon-mdh/"
       },
